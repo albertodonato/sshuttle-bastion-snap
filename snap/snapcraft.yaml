@@ -1,0 +1,49 @@
+name: sshuttle-host
+version: git
+summary: OpenSSH server for use as sshuttle target
+description: |
+  Run an OpenSSH server so that the host can be used as a sshuttle target.
+
+  The (confined) "root" user can log in to the ssh server with authorized keys.
+
+  The snap also contains Python which is needed for running the server-side
+  script pushed by sshuttle.
+
+  Available snaps settings:
+
+    ssh.port: the port to run ssh on (default: 2222)
+    ssh.authorizedkeys: content of the authorized keys file
+
+confinement: strict
+grade: stable
+base: core18
+
+apps:
+  sshd:
+    daemon: simple
+    command: usr/sbin/sshd -D -f $SNAP_COMMON/ssh/sshd_config
+    environment:
+      LD_PRELOAD: $SNAP/usr/lib/stub_calls.so
+    plugs:
+      - network
+      - network-bind
+
+  regenerate-server-keys:
+    command: sbin/sshd-keys-generate
+
+parts:
+  base:
+    plugin: dump
+    stage-packages:
+      - openssh-server
+      - python3.6
+
+  stub-calls:
+    plugin: make
+    source: stub-calls
+    artifacts:
+      - stub_calls.so
+    organize:
+      stub_calls.so: usr/lib/stub_calls.so
+    prime:
+      - usr/lib/stub_calls.so

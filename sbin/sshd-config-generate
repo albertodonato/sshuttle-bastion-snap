@@ -1,0 +1,34 @@
+#!/bin/sh -e
+#
+# Generate sshd config
+
+SSH_CONFIGS="$SNAP_COMMON/ssh"
+AUTHORIZED_KEYS_FILE="$SSH_CONFIGS/authorized_keys"
+
+ssh_port="${1:-2222}"
+ssh_authorizedkeys="$2"
+
+cat >"$SSH_CONFIGS/sshd_config" <<EOF
+Port $ssh_port
+
+HostKey $SSH_CONFIGS/ssh_host_rsa_key
+HostKey $SSH_CONFIGS/ssh_host_ecdsa_key
+HostKey $SSH_CONFIGS/ssh_host_ed25519_key
+AuthorizedKeysFile $AUTHORIZED_KEYS_FILE
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+PermitRootLogin yes
+AllowUsers root
+AllowGroups root
+
+PidFile $SNAP_DATA/sshd.pid
+
+PrintMotd no
+PrintLastLog no
+
+AcceptEnv LANG LC_*
+
+Subsystem sftp $SNAP/usr/lib/openssh/sftp-server
+EOF
+
+echo "$ssh_authorizedkeys" > "$AUTHORIZED_KEYS_FILE"

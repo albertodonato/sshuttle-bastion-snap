@@ -1,0 +1,16 @@
+#!/bin/sh -e
+#
+# Generate ssh server keys
+
+KEY_TYPES="rsa ecdsa ed25519"
+
+if [ "$(id -u -r)" -ne 0 ]; then
+    echo "Must be run as root."
+    exit 1
+fi
+
+for key_type in $KEY_TYPES; do
+    echo | "$SNAP/usr/bin/ssh-keygen" -t "$key_type"  \
+        -f "$SNAP_COMMON/ssh/ssh_host_${key_type}_key" \
+        -C "sshuttle-host server key (type $key_type)"
+done
