@@ -1,6 +1,4 @@
 #!/bin/sh -e
 
-. "$SNAP/snap/_env"
-
-mkdir "$SNAP_COMMON/ssh"
+mkdir -p "$SNAP_DATA/ssh"
 "$SNAP/sbin/sshd-keys-generate"

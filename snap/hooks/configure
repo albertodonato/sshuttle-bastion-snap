@@ -1,8 +1,6 @@
 #!/bin/sh -e
 
-. "$SNAP/snap/_env"
-
 "$SNAP/sbin/sshd-config-generate" \
     "$(snapctl get ssh.port)" \
     "$(snapctl get ssh.authorizedkeys)"
-snapctl restart sshuttle-host
+snapctl restart "$SNAP_INSTANCE_NAME"

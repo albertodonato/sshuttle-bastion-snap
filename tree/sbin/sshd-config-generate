@@ -2,7 +2,7 @@
 #
 # Generate sshd config
 
-SSH_CONFIGS="$SNAP_COMMON/ssh"
+SSH_CONFIGS="$SNAP_DATA/ssh"
 AUTHORIZED_KEYS_FILE="$SSH_CONFIGS/authorized_keys"
 
 ssh_port="${1:-2222}"

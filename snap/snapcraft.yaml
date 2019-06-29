@@ -1,6 +1,6 @@
-name: sshuttle-host
+name: sshuttle-bastion
 version: git
-summary: OpenSSH server for use as sshuttle target
+summary: OpenSSH server for use as sshuttle bastion host
 description: |
   Run an OpenSSH server so that the host can be used as a sshuttle target.
 
@@ -9,7 +9,7 @@ description: |
   The snap also contains Python which is needed for running the server-side
   script pushed by sshuttle.
 
-  Available snaps settings:
+  Available snap settings:
 
     ssh.port: the port to run ssh on (default: 2222)
     ssh.authorizedkeys: content of the authorized keys file
@@ -21,11 +21,10 @@ base: core18
 apps:
   sshd:
     daemon: simple
-    command: usr/sbin/sshd -D -f $SNAP_COMMON/ssh/sshd_config
+    command: usr/sbin/sshd -D -f $SNAP_DATA/ssh/sshd_config
     environment:
       LD_PRELOAD: $SNAP/usr/lib/stub_calls.so
     plugs:
-      - network
       - network-bind
 
   regenerate-server-keys:
@@ -34,6 +33,7 @@ apps:
 parts:
   base:
     plugin: dump
+    source: tree
     stage-packages:
       - openssh-server
       - python3.6
