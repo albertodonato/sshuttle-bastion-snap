@@ -9,8 +9,17 @@ if [ "$(id -u -r)" -ne 0 ]; then
     exit 1
 fi
 
+snapctl stop "$SNAP_INSTANCE_NAME"
 for key_type in $KEY_TYPES; do
-    echo | "$SNAP/usr/bin/ssh-keygen" -t "$key_type"  \
-        -f "$SNAP_DATA/ssh/ssh_host_${key_type}_key" \
+    keyfile="$SNAP_DATA/ssh/ssh_host_${key_type}_key"
+    rm -f "$keyfile"
+    "$SNAP/usr/bin/ssh-keygen" -N "" -t "$key_type"  \
+        -f "$keyfile" \
         -C "$SNAP_INSTANCE_NAME server key (type $key_type)"
 done
+
+echo
+echo "Server public keys:"
+echo
+cat "$SNAP_DATA"/ssh/ssh_host_*_key.pub
+snapctl start "$SNAP_INSTANCE_NAME"
