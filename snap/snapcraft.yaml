@@ -11,8 +11,9 @@ description: |
 
   Available snap settings:
 
-    ssh.port: the port to run ssh on (default: 2222)
     ssh.authorizedkeys: content of the authorized keys file
+    ssh.loglevel: the log devel (default: INFO)
+    ssh.port: the port to run ssh on (default: 2222)
 
 confinement: strict
 grade: stable

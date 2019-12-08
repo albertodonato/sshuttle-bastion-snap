@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 "$SNAP/sbin/sshd-config-generate" \
+    "$(snapctl get ssh.loglevel)" \
     "$(snapctl get ssh.port)" \
     "$(snapctl get ssh.authorizedkeys)"
 snapctl restart "$SNAP_INSTANCE_NAME"

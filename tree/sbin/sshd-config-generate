@@ -5,8 +5,9 @@
 SSH_CONFIGS="$SNAP_DATA/ssh"
 AUTHORIZED_KEYS_FILE="$SSH_CONFIGS/authorized_keys"
 
-ssh_port="${1:-2222}"
-ssh_authorizedkeys="$2"
+ssh_loglevel="${1:-INFO}"
+ssh_port="${2:-2222}"
+ssh_authorizedkeys="$3"
 
 cat >"$SSH_CONFIGS/sshd_config" <<EOF
 Port $ssh_port
@@ -21,6 +22,7 @@ PermitRootLogin yes
 AllowUsers root
 AllowGroups root
 
+LogLevel $ssh_loglevel
 PidFile $SNAP_DATA/sshd.pid
 
 PrintMotd no
