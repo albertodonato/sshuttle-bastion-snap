@@ -15,6 +15,7 @@ Port $ssh_port
 HostKey $SSH_CONFIGS/ssh_host_rsa_key
 HostKey $SSH_CONFIGS/ssh_host_ecdsa_key
 HostKey $SSH_CONFIGS/ssh_host_ed25519_key
+
 AuthorizedKeysFile $AUTHORIZED_KEYS_FILE
 PasswordAuthentication no
 ChallengeResponseAuthentication no
@@ -24,6 +25,7 @@ AllowGroups root
 
 LogLevel $ssh_loglevel
 PidFile $SNAP_DATA/sshd.pid
+ClientAliveInterval 60
 
 PrintMotd no
 PrintLastLog no
