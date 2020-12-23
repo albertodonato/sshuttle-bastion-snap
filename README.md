@@ -1,6 +1,6 @@
 # OpenSSH server for a sshuttle bastion host
 
-[![Snap Status](https://build.snapcraft.io/badge/albertodonato/sshuttle-bastion-snap.svg)](https://build.snapcraft.io/user/albertodonato/sshuttle-bastion-snap)
+[![Snap Package](https://snapcraft.io/sshuttle-bastion/badge.svg)](https://snapcraft.io/sshuttle-bastion)
 
 This snap provides an SSH server for use as a [sshuttle](https://github.com/sshuttle/sshuttle) VPN endpoint.
 
